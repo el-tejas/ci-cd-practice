@@ -21,6 +21,15 @@ jobs:
           echo "Current date: $(date)"
           uname -a
 
-      # Step 3: Run a basic test (e.g., check python version or run a linter check)
-      - name: Check Python version
-        run: python3 --version
+      # Step 3: Check Docker version pre-installed on the runner
+      - name: Check Docker version
+        run: docker --version
+
+      # Step 4: Build a temporary Docker image and run it locally
+      - name: Build a Docker image
+        run: |
+          echo "FROM alpine:latest" > Dockerfile
+          echo "RUN echo 'Hello from inside the Docker container!'" >> Dockerfile
+          
+          docker build -t my-test-app:latest .
+          docker run --rm my-test-app:latest
