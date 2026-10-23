@@ -1,0 +1,26 @@
+name: My First CI Pipeline
+
+# This tells GitHub when to run the pipeline
+on:
+  push:
+    branches: [ "main" ] # Runs every time you push code to the main branch
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Runs the job on a clean Linux virtual machine
+
+    steps:
+      # Step 1: Check out your repository code into the runner
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      # Step 2: A simple command to verify things are working
+      - name: Run a simple script
+        run: |
+          echo "Hello from your first CI/CD pipeline!"
+          echo "Current date: $(date)"
+          uname -a
+
+      # Step 3: Run a basic test (e.g., check python version or run a linter check)
+      - name: Check Python version
+        run: python3 --version
